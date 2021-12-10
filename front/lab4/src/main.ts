@@ -9,5 +9,6 @@ if (environment.production) {
   enableProdMode();
 }
 
+// Это точка входа в приложение
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
