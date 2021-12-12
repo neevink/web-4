@@ -1,22 +1,41 @@
 package com.neevin.lab4.models;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
-@Table(name="points")
+@Data
+@Table(name = "points")
 public class Point {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     private double x;
     private double y;
     private double r;
-    private boolean hit;
+    private String income;
+    private String userName;
 
-    @JoinColumn(name = "users")
-    @ManyToOne(fetch= FetchType.LAZY, cascade=CascadeType.ALL)
-    private User owner;
+
+    public Point() {}
+
+    public Point(double x, double y, double r, String income, String userName) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.income = income;
+        this.userName = userName;
+    }
+
+    @Override
+    public String toString(){
+        return "point{" + "x = " + x + ", y = " + y + ", r = " + r + "}";
+    }
 
     static boolean checkHit(double x, double y, double r){
         if(x >= 0 && y >= 0){ // 1 четверть
@@ -31,53 +50,5 @@ public class Point {
         else{ // 4 четверть
             return x*x + y*y <= r*r/4;
         }
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public double getR() {
-        return r;
-    }
-
-    public void setR(double r) {
-        this.r = r;
-    }
-
-    public boolean isHit() {
-        return hit;
-    }
-
-    public void setHit(boolean hit) {
-        this.hit = hit;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 }
