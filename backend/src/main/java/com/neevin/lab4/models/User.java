@@ -2,12 +2,8 @@ package com.neevin.lab4.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.List;
 
 @Data
 @Entity
@@ -23,7 +19,7 @@ public class User{
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "roles")
+    @JoinColumn(name = "role_id")
     private Role role;
 
     public User(String username, String password, Role role) {

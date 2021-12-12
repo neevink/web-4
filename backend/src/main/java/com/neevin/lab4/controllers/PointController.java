@@ -1,39 +1,67 @@
 package com.neevin.lab4.controllers;
 
+import com.neevin.lab4.DTO.PointDTO;
+import com.neevin.lab4.DTO.RadiusDTO;
 import com.neevin.lab4.models.Point;
-import com.neevin.lab4.services.PointService;
-import lombok.extern.slf4j.Slf4j;
+import com.neevin.lab4.models.User;
+import com.neevin.lab4.repositories.PointRepository;
+import com.neevin.lab4.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@Slf4j
+@RequestMapping(value = "/points")
 public class PointController {
+    private final UserService userService;
 
-    private final PointService pointService;
+    private final PointRepository pointRepository;
 
-    public PointController(PointService pointService) {
-        this.pointService=pointService;
-    }
-    @CrossOrigin
-    @PostMapping("/checkPoint")
-    public ResponseEntity<String> check(@RequestBody Map<String, String> request){
-        return pointService.check(request);
-    }
-    @CrossOrigin
-    @GetMapping("/Points/{userName}")
-    public List<Point> test (@PathVariable String userName) {
-        return pointService.getPoint(userName);
-    }
-    @CrossOrigin
-    @Transactional
-    @DeleteMapping("/Table/{userName}")
-    public void dropTable (@PathVariable String userName) {
-        pointService.dellPoint(userName);
+    @Autowired
+    public PointController(PointRepository pointRepository, UserService userService) {
+        this.pointRepository = pointRepository;
+        this.userService = userService;
     }
 
+    @CrossOrigin
+    @GetMapping
+    ResponseEntity<?> getUserPoints() {
+        User user = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        return ResponseEntity.ok(pointRepository.findByUser(user));
+    }
+
+    @CrossOrigin
+    @PostMapping("/update")
+    ResponseEntity<?> updatePoints(@RequestBody RadiusDTO radiusDTO) {
+        User user = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<Point> points = pointRepository.findByUser(user);
+        for (Point p : points) {
+            p.setR(radiusDTO.getR());
+            p.setResult(Point.checkHit(p.getX(), p.getY(), p.getR()));
+            pointRepository.save(p);
+        }
+        return ResponseEntity.ok(points);
+    }
+
+    @CrossOrigin
+    @PostMapping
+    ResponseEntity<?> addPoint(@RequestBody PointDTO pointDTO) {
+        User user = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        return ResponseEntity.ok(pointRepository.save(new Point(
+                pointDTO.getX(),
+                pointDTO.getY(),
+                pointDTO.getR(),
+                user
+        )));
+    }
+
+    @CrossOrigin
+    @DeleteMapping
+    ResponseEntity<?> deleteUserPoints() {
+        User user = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        return ResponseEntity.ok(pointRepository.deleteByUser(user));
+    }
 }

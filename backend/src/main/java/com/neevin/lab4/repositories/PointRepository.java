@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface PointRepository extends JpaRepository<Point, Integer> {
-    List<Point> findByUserName(String userName);
-    void deleteByUserName(String userName);
+public interface PointRepository extends JpaRepository<Point, Long> {
+    List<Point> findByUser(User user);
+
+    @Transactional
+    long deleteByUser(User user);
 }

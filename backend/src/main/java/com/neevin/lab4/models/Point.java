@@ -4,32 +4,38 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.awt.font.TextHitInfo;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "points")
 public class Point {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private long id;
 
     private double x;
     private double y;
     private double r;
-    private String income;
-    private String userName;
+    private String time;
+    private boolean result;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Point() {}
-
-    public Point(double x, double y, double r, String income, String userName) {
+    public Point(double x, double y, double r, User user) {
         this.x = x;
         this.y = y;
         this.r = r;
-        this.income = income;
-        this.userName = userName;
+        this.user = user;
+        this.result = Point.checkHit(x, y , r);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        time = format.format(date);
     }
 
     @Override
@@ -37,7 +43,7 @@ public class Point {
         return "point{" + "x = " + x + ", y = " + y + ", r = " + r + "}";
     }
 
-    static boolean checkHit(double x, double y, double r){
+    public static boolean checkHit(double x, double y, double r){
         if(x >= 0 && y >= 0){ // 1 четверть
             return 2*y + x <= r;
         }
