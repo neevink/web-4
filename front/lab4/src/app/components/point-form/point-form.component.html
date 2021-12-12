@@ -1,0 +1,19 @@
+<form>
+  <label for="x">X: </label>
+  <select name="x" id="x">
+    <option *ngFor="let xVal of xValues" [value]="xVal">{{xVal}}</option>
+  </select>
+  <br>
+
+  <label for="y">Y: </label>
+  <input type="text" id="y" [formControl]="y"></input>
+  <br>
+
+  <label for="r">R: </label>
+  <select name="r" id="r">
+    <option *ngFor="let rVal of rValues" [value]="rVal">{{rVal}}</option>
+  </select>
+
+  <button (click)="submit()">Отправить</button>
+  <button (click)="reset()">Очистить</button>
+</form>
