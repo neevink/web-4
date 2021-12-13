@@ -39,7 +39,7 @@ public class WebSecurityConfigs extends WebSecurityConfigurerAdapter implements 
                 .and()
                 .authorizeRequests()
                 .antMatchers("/register", "/login").permitAll()
-                .antMatchers("/points", "/*.js", "/*.json", "/points/update").hasRole("USER")
+                .antMatchers("/points", "/*.js", "/*.json", "/points/update").authenticated()
                 .and()
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
     }

@@ -30,7 +30,8 @@ public class PointController {
     @GetMapping
     ResponseEntity<?> getUserPoints() {
         User user = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        return ResponseEntity.ok(pointRepository.findByUser(user));
+        ResponseEntity e = ResponseEntity.ok(pointRepository.findByUser(user));
+        return e;
     }
 
     @CrossOrigin
