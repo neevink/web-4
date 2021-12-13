@@ -5,9 +5,7 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -20,11 +18,20 @@ public class JWTUtils {
 
     public String generateToken(String username) {
         Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        return Jwts.builder()
-                .setSubject(username)
-                .setExpiration(date)
-                .signWith(SignatureAlgorithm.HS512, secretKey)
-                .compact();
+        String s = "";
+        try{
+            s = Jwts.builder()
+                    .setSubject(username)
+                    .setExpiration(date)
+                    .signWith(SignatureAlgorithm.HS512, secretKey) // тут ошибка
+                    .compact();
+            return s;
+        }
+        catch (Exception exc){
+            System.out.println(exc);
+            exc.printStackTrace();
+        }
+        return s;
     }
 
     public String getUsernameFromToken(String token) {
