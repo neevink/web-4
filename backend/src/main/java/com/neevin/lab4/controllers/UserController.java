@@ -33,6 +33,7 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
         try {
+            System.out.println(String.format("New register request: %s %s", userDTO.getUsername(), userDTO.getPassword()));
             if (userService.findByUsername(userDTO.getUsername()) != null) {
                 throw new IllegalArgumentException();
             }
@@ -41,10 +42,11 @@ public class UserController {
                     passwordEncoder.encode(userDTO.getPassword()),
                     roleRepository.findByName(RoleEnum.USER.getName())
             ));
-            return ResponseEntity.ok().body("New user with username " + userDTO.getUsername() + " created!");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("This username " + userDTO.getUsername() + " is already exist!");
+            return ResponseEntity.ok().body(generateResponseJSON("New user with username " + userDTO.getUsername() + " created!"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(generateResponseJSON("This username " + userDTO.getUsername() + " is already exist!"));
         }
+
     }
 
     @CrossOrigin
@@ -61,7 +63,12 @@ public class UserController {
                 return ResponseEntity.ok().body(token);
             }
         } catch (IllegalArgumentException | IllegalAccessException e) {
-            return ResponseEntity.badRequest().body("Incorrect username or password!");
+            return ResponseEntity.badRequest().body(generateResponseJSON("Incorrect username or password!"));
         }
     }
+
+    private static String generateResponseJSON(String message){
+        return String.format("{\"message\": \"%s\"}", message);
+    }
+
 }

@@ -51,7 +51,8 @@ public class PointController {
     @PostMapping
     ResponseEntity<?> addPoint(@RequestBody PointDTO pointDTO) {
         User user = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        return ResponseEntity.ok(pointRepository.save(new Point(
+        return ResponseEntity.ok(pointRepository.save(
+            new Point(
                 pointDTO.getX(),
                 pointDTO.getY(),
                 pointDTO.getR(),
