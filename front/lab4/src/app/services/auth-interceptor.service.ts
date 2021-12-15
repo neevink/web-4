@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpEvent, HttpHandler, HttpRequest} from "@angular/common/http";
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthInspectorService {
+@Injectable()
+export class AuthInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -13,7 +11,8 @@ export class AuthInspectorService {
     console.log("Intercepted packet");
     if (idToken) {
       const cloned = req.clone({
-        headers: req.headers.set("Authorization", "Bearer " + idToken),
+        headers: req.headers.set("Authorization",
+          "Bearer " + idToken),
         method: req.method
       });
       console.log(cloned);
