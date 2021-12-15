@@ -8,6 +8,6 @@ export class PointService {
   constructor() { }
 
   addPoint(x: number, y:number, r:number){
-    console.log(x, y, r);
+    console.log('Adding new points:', x, y, r);
   }
 }
