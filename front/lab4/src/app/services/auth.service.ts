@@ -3,6 +3,7 @@ import { UserToken } from "../models/user-token";
 import { HttpClient } from "@angular/common/http";
 import { shareReplay } from "rxjs";
 import { environment } from "src/environments/environment";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -20,21 +21,25 @@ export class AuthService {
     return l;
   }
 
-  doRegister(user: String, pass: String){
-    const obs = this.register(user, pass);
-    obs.subscribe(
-      this.setSession,
-      console.error,
-      console.log);
+  doRegister(user: String, pass: String, router: Router){
+    console.log(4445)
+    const obs = this.register(user, pass)
+      .subscribe(
+        (data: any) => {
+          alert(data.message);
+          router.navigateByUrl('/');
+        },
+        error => alert("Ошибка авторизации " + error.error.message)
+    );
     return obs;
   }
 
   register(username: String, password: String){
-    return this.http.post<UserToken>(`${environment}/register`, {username, password}).pipe( shareReplay() );
+    return this.http.post<UserToken>(`${environment.api}/register`, {username, password}).pipe(shareReplay());
   }
 
   login(username: String, password: String) {
-    return this.http.post<UserToken>(`${environment}/login`, {username, password});
+    return this.http.post<UserToken>(`${environment.api}/login`, {username, password});
   }
 
   logout() {
