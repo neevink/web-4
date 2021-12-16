@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {PointService} from "../../services/point.service";
 
@@ -47,7 +47,13 @@ export class PointFormComponent implements OnInit {
     return parseFloat(this._r.value) > 0;
   }
 
-  constructor(private pointService: PointService) {}
+  @Output() rChange = new EventEmitter<number>();
+
+  constructor(private pointService: PointService) {
+    this._r.valueChanges.subscribe((value)=>{
+      this.rChange.emit(value);
+    });
+  }
 
   ngOnInit(): void {
   }

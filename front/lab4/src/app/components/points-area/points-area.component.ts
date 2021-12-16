@@ -8,7 +8,8 @@ import {PointService} from "../../services/point.service";
   styleUrls: ['./points-area.component.css']
 })
 export class PointsAreaComponent implements OnInit {
-  @Input() pointList!: Point[];
+  @Input()
+  pointList!: Point[];
   _r: number = 1;
 
   @Input() get r(): number{
@@ -28,24 +29,26 @@ export class PointsAreaComponent implements OnInit {
   constructor(private pointService: PointService) { }
 
   ngOnInit(): void {
+    this.pointList = this.pointService.points;
   }
 
   checkPoint(e: MouseEvent){
+    console.log('R = ', this._r);
     const rect = this.canvas.nativeElement.getBoundingClientRect();
     console.log(this.canvas.nativeElement)
-    if(this._r <= 0) {
-      const x = (e.clientX - rect.left - 200) * this._r / 160;
-      const y = -(e.clientY - rect.top - 200) * this._r / 160;
-      if(y < -5 || y > 5){
+    if(this._r > 0) {
+      const x = (e.clientX - rect.left - 200) / 160;
+      const y = -(e.clientY - rect.top - 200) / 160;
+      if (y < -3 || y > 3) {
         alert("Y должен быть от -3 до 3");
         return;
       }
-
+      console.log('post!');
       this.pointService.postPoint(x, y, this._r);
-      }
-      else{
-        alert("Пожалуйста, выберите положительный R");
-      }
+    }
+    else{
+      alert("Пожалуйста, выберите положительный R");
+    }
   }
 
   scaleCircles(newR: number){
