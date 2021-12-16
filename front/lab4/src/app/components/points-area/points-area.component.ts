@@ -42,8 +42,8 @@ export class PointsAreaComponent implements OnInit {
     const rect = this.canvas.nativeElement.getBoundingClientRect();
     //console.log(this.canvas.nativeElement)
     if(this.pointService.r > 0) {
-      const x = (e.clientX - rect.left - 200) / 160;
-      const y = -(e.clientY - rect.top - 200) / 160;
+      const x = (e.clientX - rect.left - 200) / 160 * this.pointService.r;
+      const y = -(e.clientY - rect.top - 200) / 160 * this.pointService.r;
       if (y < -3 || y > 3) {
         alert("Y должен быть от -3 до 3");
         return;

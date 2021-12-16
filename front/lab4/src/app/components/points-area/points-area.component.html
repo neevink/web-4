@@ -44,7 +44,7 @@
   <!-- Точки -->
   <circle #circle *ngFor="let point of (r < 1 ? [] : filterPoints)" cx="0" cy="0" r="0.03"
           [attr.data-x]="point.x" [attr.data-y]="point.y"
-          [attr.fill]="point.result ? 'green' : 'red'" [attr.stroke]="point.result ? 'green' : 'red'" [style]="{'transform':'translate(' + point.x/point.r * r + 'px, ' + -point.y/point.r * r +  'px)'}">
+          [attr.fill]="point.result ? 'green' : 'red'" [attr.stroke]="point.result ? 'green' : 'red'" [style]="{'transform':'translate(' + point.x/point.r + 'px, ' + -point.y/point.r +  'px)'}">
   </circle>
 
 </svg>
