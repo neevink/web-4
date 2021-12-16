@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-main',
@@ -6,14 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  login='login'
+  constructor(private authService: AuthService, private router: Router) { }
 
-  constructor() { }
+  ngOnInit(): void {
+  }
 
-  ngOnInit(): void {}
+  getUsername(){
+    return localStorage.getItem('login');
+  }
 
-  changeLogin(){
-    this.login = 'Kirill';
+
+  logout(){
+    this.authService.logout();
+    localStorage.removeItem('login');
+    console.log('Выход');
+    this.router.navigate(['/login']);
   }
 
 }

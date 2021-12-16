@@ -1,24 +1,10 @@
-<h2>Main</h2>
+Вы вошли, как {{ getUsername() }}
+<br>
+<button (click)="logout()">выйти</button>
+
+<h2>Главная страница</h2>
+
 <app-point-form></app-point-form>
 
-<h1>Hello World!</h1>
-
-Вы вошли, как {{ login }}
-<button [ngStyle]="{color: login==='Kirill' ? 'red': 'green'}" (click)="changeLogin()">aaa</button>
 <br>
 
-Сори, вы не авторизованы. Войдите, пожалуйста в аккаунт:
-
-<form>
-  <label for="login">логин:</label>
-  <input type="text" name="login" id="login">
-  <br>
-  <label for="password">пароль:</label>
-  <input type="password" name="password" id="password">
-  <br>
-  <input type="submit" value="войти">
-  <br>
-</form>
-
-У меня нет аккаунта -
-<a href="/signup">Зарегистрироваться</a>

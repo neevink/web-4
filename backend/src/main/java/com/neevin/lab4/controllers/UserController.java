@@ -60,7 +60,7 @@ public class UserController {
                 throw new IllegalAccessException();
             } else {
                 String token = jwtUtils.generateToken(userDTO.getUsername());
-                return ResponseEntity.ok().body(token);
+                return ResponseEntity.ok().body(String.format("{\"token\": \"%s\"}", token));
             }
         } catch (IllegalArgumentException | IllegalAccessException e) {
             return ResponseEntity.badRequest().body(generateResponseJSON("Incorrect username or password!"));

@@ -12,24 +12,41 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  doLogin(user: String, pass: String){
+  getLogin(){
+    let tk: string | null = localStorage.getItem('token');
+
+  }
+
+  doLogin(user: String, pass: String, router: Router){
     const l = this.login(user, pass);
     l.subscribe(
-      (data)=>this.setSession(data),
-      console.error,
-      console.log);
+      (data) => {
+        let tk: UserToken = new UserToken(data.token);
+        console.log(tk);
+        this.setSession(tk);
+        localStorage.setItem('login', user.toString());
+        router.navigateByUrl('../login');
+      },
+      error => {
+        console.log(error);
+        if (error.status == 400) {
+          alert('Неверный логин или пароль');
+        } else {
+          alert('Ошибка сервера');
+        }
+      }
+    );
     return l;
   }
 
   doRegister(user: String, pass: String, router: Router){
-    console.log(4445)
     const obs = this.register(user, pass)
       .subscribe(
         (data: any) => {
           alert(data.message);
           router.navigateByUrl('/');
         },
-        error => alert("Ошибка авторизации " + error.error.message)
+        error => alert("Ошибка: " + error.error.message)
     );
     return obs;
   }

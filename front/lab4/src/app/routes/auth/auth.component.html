@@ -1,16 +1,16 @@
-<h2>Login</h2>
-<form>
+<h2>Сори, вы не авторизованы. Войдите, пожалуйста в аккаунт:</h2>
+
   <label for="login">логин:</label>
-  <input type="text" name="login" id="login">
+  <input type="text" name="login" id="login" [formControl]="username">
   <br>
   <label for="password">пароль:</label>
-  <input type="password" name="password" id="password">
+  <input type="password" name="password" id="password" [formControl]="password">
   <br>
 
-  <input type="submit" value="войти">
+  <button (click)="login()">Войти</button>
   <br>
   <br>
   <br>
   У меня нет аккаунта -
   <a href="/register">Создать</a>
-</form>
+
