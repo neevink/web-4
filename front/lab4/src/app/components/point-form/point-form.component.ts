@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {PointService} from "../../services/point.service";
+import {Point} from "../../models/point";
 
 @Component({
   selector: 'app-point-form',
@@ -21,7 +22,7 @@ export class PointFormComponent implements OnInit {
   r = new FormControl();
 
   submit(){
-    this.pointService.addPoint(this.x.value, this.y.value, this.r.value);
+    this.pointService.postPoint(this.x.value, this.y.value, this.r.value);
   }
 
   reset(){

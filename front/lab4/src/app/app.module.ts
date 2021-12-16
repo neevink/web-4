@@ -11,6 +11,8 @@ import { RegisterComponent } from './routes/register/register.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptorService} from "./services/auth-interceptor.service";
 import {AuthGuardService} from "./services/auth-guard.service";
+import { PointsAreaComponent } from './components/points-area/points-area.component';
+import { PointTableComponent } from './components/point-table/point-table.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import {AuthGuardService} from "./services/auth-guard.service";
     MainComponent,
     AuthComponent,
     PointFormComponent,
-    RegisterComponent
+    RegisterComponent,
+    PointsAreaComponent,
+    PointTableComponent
   ],
   imports: [
     BrowserModule,

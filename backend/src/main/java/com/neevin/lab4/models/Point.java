@@ -22,6 +22,7 @@ public class Point {
     private double r;
     private String time;
     private boolean result;
+    private String owner;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -33,6 +34,7 @@ public class Point {
         this.r = r;
         this.user = user;
         this.result = Point.checkHit(x, y , r);
+        this.owner = user.getUsername();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         time = format.format(date);

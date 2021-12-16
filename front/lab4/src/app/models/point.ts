@@ -4,8 +4,7 @@ export class Point {
     public y: number,
     public r: number,
     public color: string,
-    public inside: boolean,
-    public owner: string){
-
+    public result: boolean,
+    public user: {username: string}){
   }
 }

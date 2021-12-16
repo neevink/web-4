@@ -1,0 +1,20 @@
+<table>
+  <thead>
+  <tr>
+    <td>Владелец: </td>
+    <td>X: </td>
+    <td>Y: </td>
+    <td>R: </td>
+    <td>Попадание: </td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let point of pointList">
+    <td>{{point.user.username}}</td>
+    <td [style.background-color]="point.color">{{point.x}}</td>
+    <td [style.background-color]="point.color">{{point.y}}</td>
+    <td>{{point.r}}</td>
+    <td>{{point.result ? '✅' : '❌'}}</td>
+  </tr>
+  </tbody>
+</table>
