@@ -15,7 +15,6 @@ export class PointTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.pointList = this.pointService.points;
-
   }
 
 }

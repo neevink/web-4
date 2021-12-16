@@ -20,8 +20,11 @@ export class PointsAreaComponent implements OnInit {
     this.scaleCircles(this._r);
   }
 
-  @ViewChildren('circle') circles!:QueryList<ElementRef>;
-  @ViewChild('canvas') canvas!:ElementRef;
+  @ViewChildren('circle')
+  circles!:QueryList<ElementRef>;
+  @ViewChild('canvas')
+  canvas!:ElementRef;
+
   constructor(private pointService: PointService) { }
 
   ngOnInit(): void {
@@ -30,22 +33,19 @@ export class PointsAreaComponent implements OnInit {
   checkPoint(e: MouseEvent){
     const rect = this.canvas.nativeElement.getBoundingClientRect();
     console.log(this.canvas.nativeElement)
-    if(this._r) {
+    if(this._r <= 0) {
       const x = (e.clientX - rect.left - 200) * this._r / 160;
-      if(x > 2 || x < -2){
-        alert("X should be between -2 and 2");
-        return;
-      }
       const y = -(e.clientY - rect.top - 200) * this._r / 160;
       if(y < -5 || y > 5){
-        alert("Y should be between -3 and 3");
+        alert("Y должен быть от -3 до 3");
         return;
       }
 
       this.pointService.postPoint(x, y, this._r);
-    } else{
-      alert("Please choose R before doing anything lewd.");
-    }
+      }
+      else{
+        alert("Пожалуйста, выберите положительный R");
+      }
   }
 
   scaleCircles(newR: number){

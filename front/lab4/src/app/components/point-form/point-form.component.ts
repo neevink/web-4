@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {PointService} from "../../services/point.service";
-import {Point} from "../../models/point";
 
 @Component({
   selector: 'app-point-form',
@@ -14,21 +13,38 @@ export class PointFormComponent implements OnInit {
   readonly yMax = 3;
   readonly rValues = [-4, -3, -2, -1, 0, 1, 2, 3, 4]; // Select {'-4','-3','-2','-1','0','1','2','3','4'} для задания радиуса области
 
-  x = new FormControl();
+  x = new FormControl(-4);
   y = new FormControl('', Validators.compose([
     Validators.min(-3),
     Validators.max(3)
   ]));
-  r = new FormControl();
+  _r = new FormControl(1);
 
   submit(){
-    this.pointService.postPoint(this.x.value, this.y.value, this.r.value);
+    console.log(`отправка ${this.x.value} ${this.y.value} ${this._r.value}`);
+    if(!this.validateY()){
+      alert('Y должен быть чистом от -4 до 4');
+    }
+    else if(!this.validateR()){
+      alert('R должен быть чистом от 1 до 4');
+    }
+    else{
+      this.pointService.postPoint(this.x.value, this.y.value, this._r.value);
+    }
   }
 
   reset(){
-    this.x.reset();
-    this.y.reset();
-    this.r.reset();
+    this.x.setValue(-4);
+    this.y.setValue('');
+    this._r.setValue(1);
+  }
+
+  validateY() : boolean{
+    return parseFloat(this.y.value) >= -4 && parseFloat(this.y.value) <= 4;
+  }
+
+  validateR(){
+    return parseFloat(this._r.value) > 0;
   }
 
   constructor(private pointService: PointService) {}

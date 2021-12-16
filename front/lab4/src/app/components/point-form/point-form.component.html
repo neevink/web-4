@@ -1,6 +1,6 @@
 
   <label for="x">X: </label>
-  <select name="x" id="x">
+  <select name="x" id="x" [formControl]="x">
     <option *ngFor="let xVal of xValues" [value]="xVal">{{xVal}}</option>
   </select>
   <br>
@@ -10,7 +10,7 @@
   <br>
 
   <label for="r">R: </label>
-  <select name="r" id="r">
+  <select name="r" id="r" [formControl]="_r">
     <option *ngFor="let rVal of rValues" [value]="rVal">{{rVal}}</option>
   </select>
 
