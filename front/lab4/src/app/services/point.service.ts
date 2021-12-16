@@ -9,6 +9,7 @@ import {shareReplay} from "rxjs";
 })
 export class PointService {
   points: Point[] = this.getPoints();
+  r: number = 1;
 
   getPoints(){
     this.points = [];

@@ -10,7 +10,7 @@
   <br>
 
   <label for="r">R: </label>
-  <select name="r" id="r" [formControl]="_r">
+  <select name="r" id="r" [formControl]="_r" (input)="setR($event)">
     <option *ngFor="let rVal of rValues" [value]="rVal">{{rVal}}</option>
   </select>
 

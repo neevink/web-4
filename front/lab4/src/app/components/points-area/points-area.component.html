@@ -3,11 +3,11 @@
      viewBox="-1.2 -1.2 2.4 2.4"
      fill="transparent" stroke-width="0.002" #canvas>
   <path attr.d="{{
-             _r<0 ? '' : 'M -0.5 0 A 0.5 0.5 0 0 0 0 0.5 V0 H0 V-1 H0 H-0.5'}}"
+             r<1 ? '' : 'M -0.5 0 A 0.5 0.5 0 0 0 0 0.5 V0 H0 V-1 H0 H-0.5'}}"
         attr.transform="{{'rotate(-90)'}}"/>
   <path attr.d="{{
-             _r<0 ? '' : 'M 0 0 V-1 H0 L-0.5,0z'}}"
-        attr.transform="{{_r<0?'' : 'rotate(90)'}}"/>
+             r<1 ? '' : 'M 0 0 V-1 H0 L-0.5,0z'}}"
+        attr.transform="{{r<1?'' : 'rotate(90)'}}"/>
   <!-- подписи -->
   <text id="svg-x" x="1.15" y="0.1" font-size="0.1" fill="white" text-anchor="end">X</text>
   <text id="r-x" x="1.0" y="0.1" class="horizontal-label">
@@ -42,9 +42,9 @@
   <polyline points="1.1 -0.05 1.2 0 1.1 0.05" stroke="black"></polyline>
 
   <!-- Точки -->
-  <circle #circle *ngFor="let point of pointList" cx="0" cy="0" r="0.03"
+  <circle #circle *ngFor="let point of (r < 1 ? [] : filterPoints)" cx="0" cy="0" r="0.03"
           [attr.data-x]="point.x" [attr.data-y]="point.y"
-          [attr.fill]="point.result ? 'green' : 'red'" [attr.stroke]="point.result ? 'green' : 'red'" [style]="{'transform':'translate(' + point.x/point.r * _r + 'px, ' + -point.y/point.r * _r +  'px)'}">
+          [attr.fill]="point.result ? 'green' : 'red'" [attr.stroke]="point.result ? 'green' : 'red'" [style]="{'transform':'translate(' + point.x/point.r * r + 'px, ' + -point.y/point.r * r +  'px)'}">
   </circle>
 
 </svg>

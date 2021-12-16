@@ -9,16 +9,16 @@ import {PointService} from "../../services/point.service";
 })
 export class PointsAreaComponent implements OnInit {
   @Input()
-  pointList!: Point[];
-  _r: number = 1;
+  pointList: Point[] = [];
 
-  @Input() get r(): number{
-    return this._r;
+  get filterPoints(){
+    console.log('sqsqsqd', this.pointList.concat([]));
+    return this.pointList.concat([]).filter(x => x.r == this.r);
   }
 
-  set r(value: number){
-    this._r = value;
-    this.scaleCircles(this._r);
+  @Input()
+  get r(): number{
+    return this.pointService.r;
   }
 
   @ViewChildren('circle')
@@ -29,22 +29,27 @@ export class PointsAreaComponent implements OnInit {
   constructor(private pointService: PointService) { }
 
   ngOnInit(): void {
+    console.log(this.pointService.points);
+    let cp: Point[] = Array.from(this.pointService.points);
+    console.log('vals', cp);
+    this.pointService.points.forEach(x => console.log(x));//.filter(x => x.r == this.r);
     this.pointList = this.pointService.points;
+    console.log(this.pointList);
   }
 
   checkPoint(e: MouseEvent){
-    console.log('R = ', this._r);
+    console.log('R = ', this.pointService.r);
     const rect = this.canvas.nativeElement.getBoundingClientRect();
-    console.log(this.canvas.nativeElement)
-    if(this._r > 0) {
+    //console.log(this.canvas.nativeElement)
+    if(this.pointService.r > 0) {
       const x = (e.clientX - rect.left - 200) / 160;
       const y = -(e.clientY - rect.top - 200) / 160;
       if (y < -3 || y > 3) {
         alert("Y должен быть от -3 до 3");
         return;
       }
-      console.log('post!');
-      this.pointService.postPoint(x, y, this._r);
+      console.log('post!', x, y, this.pointService.r);
+      this.pointService.postPoint(x, y, this.pointService.r);
     }
     else{
       alert("Пожалуйста, выберите положительный R");

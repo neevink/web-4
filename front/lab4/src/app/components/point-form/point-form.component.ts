@@ -1,6 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {PointService} from "../../services/point.service";
+import {PointsAreaComponent} from "../points-area/points-area.component";
 
 @Component({
   selector: 'app-point-form',
@@ -19,6 +20,22 @@ export class PointFormComponent implements OnInit {
     Validators.max(3)
   ]));
   _r = new FormControl(1);
+
+  @Output() rChange = new EventEmitter<number>();
+
+  @Input()
+  set r(value: number){
+    this._r.setValue(value);
+    console.log(`tried to set ${value}`);
+    this.rChange.emit(this._r.value);
+  }
+
+  setR(newR: any){
+    //console.log(newR.target.value);
+    this._r.setValue(newR.target.value);
+    this.pointService.r = this._r.value;
+    //console.log(this._r.value);
+  }
 
   submit(){
     console.log(`отправка ${this.x.value} ${this.y.value} ${this._r.value}`);
@@ -46,8 +63,6 @@ export class PointFormComponent implements OnInit {
   validateR(){
     return parseFloat(this._r.value) > 0;
   }
-
-  @Output() rChange = new EventEmitter<number>();
 
   constructor(private pointService: PointService) {
     this._r.valueChanges.subscribe((value)=>{
