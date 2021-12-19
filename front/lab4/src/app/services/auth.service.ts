@@ -4,13 +4,14 @@ import { HttpClient } from "@angular/common/http";
 import { shareReplay } from "rxjs";
 import { environment } from "src/environments/environment";
 import {Router} from "@angular/router";
+import {PointService} from "./point.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private pointService: PointService) {}
 
   getLogin(){
     let tk: string | null = localStorage.getItem('token');
@@ -25,6 +26,7 @@ export class AuthService {
         console.log(tk);
         this.setSession(tk);
         localStorage.setItem('login', user.toString());
+        this.pointService.updatePoints();
         router.navigateByUrl('../login');
       },
       error => {
@@ -66,7 +68,6 @@ export class AuthService {
 
   setSession(token: UserToken){
     localStorage.setItem('token', token.token);
-    console.log(token.token);
   }
 
   public isAuthenticated(): boolean {

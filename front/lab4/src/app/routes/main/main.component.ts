@@ -16,7 +16,7 @@ export class MainComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, private pointServices: PointService) { }
 
   ngOnInit(): void {
-    this.points = this.pointServices.getPoints();
+    this.points = this.pointServices.points;
   }
 
   getUsername(){
