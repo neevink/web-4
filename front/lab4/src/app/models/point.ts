@@ -5,6 +5,6 @@ export class Point {
     public y: number,
     public r: number,
     public result: boolean,
-    public user: {username: string}){
-  }
+    public time: string,
+    public user: {username: string}){}
 }

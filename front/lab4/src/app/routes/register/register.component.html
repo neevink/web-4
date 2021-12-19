@@ -1,20 +1,25 @@
 <h2>Создать аккаунт:</h2>
 
-  <label for="login">логин:</label>
-  <input type="text" name="login" id="login" [formControl]="username">
-  <br>
-  <label for="password">пароль:</label>
-  <input type="password" name="password" id="password" [formControl]="password">
-  <br>
-  <!--
-  <label for="password-again">повторите пароль:</label>
-  <input type="password" id="password-again">
-  <br>
-  -->
-  <button (click)="register()">зарегистрироваться</button>
-  <br>
-  <br>
-  <br>
-  У меня уже есть аккаунт -
-  <a href="/login">Войти</a>
+<div class="register-form-wrapper">
+  <div class="register-form">
+    <div class="register-form-row">
+      <label class="register-form-cell" for="login" id="login-for">логин:</label>
+      <input class="register-form-cell" type="text" name="login" id="login" [formControl]="username">
+    </div>
 
+    <div class="register-form-row">
+      <label class="register-form-cell" for="password" id="password-for">пароль:</label>
+      <input class="register-form-cell" type="password" name="password" id="password" [formControl]="password">
+    </div>
+
+    <div class="register-form-row register-btn">
+      <button (click)="register()">зарегистрироваться</button>
+    </div>
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+У меня уже есть аккаунт -
+<a href="/login">Войти</a>

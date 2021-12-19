@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {PointService} from "../../services/point.service";
-import {PointsAreaComponent} from "../points-area/points-area.component";
 
 @Component({
   selector: 'app-point-form',
@@ -31,10 +30,8 @@ export class PointFormComponent implements OnInit {
   }
 
   setR(newR: any){
-    //console.log(newR.target.value);
     this._r.setValue(newR.target.value);
     this.pointService.r = this._r.value;
-    //console.log(this._r.value);
   }
 
   submit(){
@@ -46,7 +43,11 @@ export class PointFormComponent implements OnInit {
       alert('R должен быть чистом от 1 до 4');
     }
     else{
-      this.pointService.postPoint(this.x.value, this.y.value, this._r.value);
+      this.pointService.postPoint(
+        parseFloat(this.x.value),
+        parseFloat(this.y.value.replace('.', ',')),
+        parseFloat(this._r.value)
+      );
     }
   }
 
